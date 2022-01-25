@@ -18,6 +18,10 @@ namespace ProgramInwentaryzacyjny
         {
             MainFrame.Content = new StorageMainPage();
         }
+        private void Aktualizacja_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new StorageEditPage();
+        }
         private void Wyjście_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

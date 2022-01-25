@@ -30,28 +30,16 @@ namespace ProgramInwentaryzacyjny
         {
             sql_con.Close();
         }
-        private void ExecuteQuery(string txtQuery)
-        {
-            ConnectToDatabase();
-            sql_cmd = sql_con.CreateCommand();
-            sql_cmd.CommandText = txtQuery;
-            sql_cmd.ExecuteNonQuery();
-            CloseConnection();
-        }
         private void LoadProducts()
         {
-            try
-            {
-                string txtQuery = "Select * from Products";
-                ConnectToDatabase();
-                sql_cmd = sql_con.CreateCommand();
-                dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);
-                dt = new DataTable("Products");
-                dataAdapter.Fill(dt);
-                ProduktDataGrid.ItemsSource = dt.DefaultView;
-                CloseConnection();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+            string txtQuery = "Select * from Products";
+            ConnectToDatabase();
+            sql_cmd = sql_con.CreateCommand();
+            dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);
+            dt = new DataTable("Products");
+            dataAdapter.Fill(dt);
+            ProduktDataGrid.ItemsSource = dt.DefaultView;
+            CloseConnection();
         }
     }
 }

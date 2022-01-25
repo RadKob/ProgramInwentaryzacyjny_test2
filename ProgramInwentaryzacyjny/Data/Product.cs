@@ -7,5 +7,6 @@ namespace ProgramInwentaryzacyjny.Data
     class Product
     {
         public string Symbol { get; set; }
+        public string Nazwa { get; set; }
     }
 }

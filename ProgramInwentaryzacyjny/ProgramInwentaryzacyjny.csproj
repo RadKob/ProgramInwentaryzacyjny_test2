@@ -23,11 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Multikino_logo.png" />
+    <Folder Include="Images\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
+    <Resource Include="Multikino_logo.png" />
   </ItemGroup>
 
 </Project>

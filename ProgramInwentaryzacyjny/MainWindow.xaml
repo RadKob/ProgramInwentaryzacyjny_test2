@@ -9,20 +9,48 @@
     <Grid>
         <Grid.Background>
             <LinearGradientBrush>
-                <GradientStop Color="#C53783" Offset="1.0" />
-                <GradientStop Color="White" Offset="0.5" />
+                <GradientStop Color="#C53783" Offset="1.0"/>
+                <GradientStop Color="White" Offset="0.5"/>
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Margin="10" Background="Gainsboro">
+        <StackPanel Margin="10" Background="White">
             <TextBlock Margin="15" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">Menu</TextBlock>
-            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Magazyn_Click">Magazyn</Button>
-            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic">Aktualizacja</Button>
-            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic">Raport</Button>
-            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Wyjście_Click">Wyjście</Button>
+            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Magazyn_Click" Content="Magazyn">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#C53783" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Aktualizacja_Click" Content="Aktualizacja">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#C53783" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Content="Raport">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#C53783" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Wyjście_Click" Content="Wyjście">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#C53783" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
         </StackPanel>
         <Frame Grid.Column="1" x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>

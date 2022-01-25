@@ -28,33 +28,27 @@ namespace ProgramInwentaryzacyjny
         {
             sql_con.Close();
         }
+        private void btn_Login_Action(object sender, RoutedEventArgs e)
+        {
+            string txtQuery = "Select * from Users where UserLogin= '" + txt_użytkownik.Text + "' and Password= '" + txt_hasło.Password + "'";
+            ConnectToDatabase();
+            SQLiteCommand sql_cmd = new SQLiteCommand(txtQuery, sql_con);
+            sql_cmd.ExecuteNonQuery();
+            SQLiteDataReader dataReader = sql_cmd.ExecuteReader();
+            int count = 0;
+            while (dataReader.Read()) { count++; }
+            if(count == 1)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
+            else { MessageBox.Show("Nazwa użytkownika lub hasło jest błędne"); }
+            CloseConnection();
+        }
         private void btn_Exit_Action(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-        private void btn_Login_Action(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string txtQuery = "Select * from Users where UserLogin= '" + txt_użytkownik.Text + "' and Password= '" + txt_hasło.Password + "'";
-                ConnectToDatabase();
-                SQLiteCommand sql_cmd = new SQLiteCommand(txtQuery, sql_con);
-                sql_cmd.ExecuteNonQuery();
-                SQLiteDataReader dataReader = sql_cmd.ExecuteReader();
-                int count = 0;
-                while (dataReader.Read()) { count++; }
-                if(count == 1)
-                {
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Nazwa użytkownika lub hasło jest błędne");                }
-                CloseConnection();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
     }
 }
