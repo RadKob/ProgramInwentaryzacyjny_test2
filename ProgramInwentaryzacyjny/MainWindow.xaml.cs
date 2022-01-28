@@ -22,6 +22,10 @@ namespace ProgramInwentaryzacyjny
         {
             MainFrame.Content = new StorageEditPage();
         }
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void Wyjście_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

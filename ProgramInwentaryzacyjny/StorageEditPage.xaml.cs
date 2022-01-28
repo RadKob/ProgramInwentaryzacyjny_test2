@@ -43,13 +43,13 @@ namespace ProgramInwentaryzacyjny
         }
         private void txt_wyszukiwarka_KeyPress(object sender, KeyEventArgs e)
         {
-            if(txt_wyszukiwarka.Text == string.Empty)
+            if (txt_wyszukiwarka.Text == string.Empty)
             {
                 LoadProducts();
             }
             else
             {
-                string txtQuery = string.Format("Select * from Products where Symbol like '%{0}%'",txt_wyszukiwarka.Text);
+                string txtQuery = string.Format("Select * from Products where Symbol like '%{0}%' or Nazwa_produktu like '%{0}%'", txt_wyszukiwarka.Text);
                 sql_cmd = sql_con.CreateCommand();
                 dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);
                 dt = new DataTable("Products");
@@ -66,6 +66,34 @@ namespace ProgramInwentaryzacyjny
             {
                 txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
                 txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
+                txt_ilośćEdit.Text = dataRowView["Ilość"].ToString();
+                txt_jednostkaEdit.Text = dataRowView["Jedn_miary"].ToString();
+            }
+        }
+        private void ClearTxtBoxs()
+        {
+            txt_symbolEdit.Clear();
+            txt_nazwaEdit.Clear();
+            txt_ilośćEdit.Clear();
+            txt_jednostkaEdit.Clear();
+        }
+        private void EditProduct(object sender, RoutedEventArgs e)
+        {
+            if (txt_symbolEdit.Text == string.Empty || txt_nazwaEdit.Text == string.Empty || txt_ilośćEdit.Text == string.Empty || txt_jednostkaEdit.Text == string.Empty)
+            {
+                MessageBox.Show("Parametry nie mogą być puste");
+            }
+            else
+            {
+                string txtQuery = "Update Products set Nazwa_produktu='" + txt_nazwaEdit.Text + "', Ilość='" + txt_ilośćEdit.Text + "', Jedn_miary='" + txt_jednostkaEdit.Text + "' where Symbol='" + txt_symbolEdit.Text + "'";
+                ConnectToDatabase();
+                sql_cmd = sql_con.CreateCommand();
+                sql_cmd.CommandText = txtQuery;
+                sql_cmd.ExecuteNonQuery();
+                CloseConnection();
+                MessageBox.Show("Produkt zaaktualizowany");
+                LoadProducts();
+                ClearTxtBoxs();
             }
         }
     }

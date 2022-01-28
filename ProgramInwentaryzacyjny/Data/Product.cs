@@ -8,5 +8,7 @@ namespace ProgramInwentaryzacyjny.Data
     {
         public string Symbol { get; set; }
         public string Nazwa { get; set; }
+        public int Ilość { get; set; }
+        public string Jedn_miary { get; set; }
     }
 }

@@ -8,10 +8,36 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StorageMainPage">
     <Grid>
-        <DataGrid Name="ProduktDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="5" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid Name="ProduktDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="5" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" Width="auto">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" FontSize="20"/>
-                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20"/>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" FontSize="20" Width="auto">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20" Width="auto">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Ilość" Binding="{Binding Ilość}" FontSize="20" Width="auto">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Jedn. miary" Binding="{Binding Jedn_miary}" FontSize="20" Width="auto">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

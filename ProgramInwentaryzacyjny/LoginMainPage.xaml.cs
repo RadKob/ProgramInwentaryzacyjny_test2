@@ -12,8 +12,6 @@ namespace ProgramInwentaryzacyjny
     {
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";
         private SQLiteConnection sql_con;
-        private SQLiteCommand sql_cmd;
-        private SQLiteDataAdapter dataAdapter;
         DataTable dt = new DataTable();
         public LoginMainPage()
         {

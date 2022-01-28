@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProgramInwentaryzacyjny"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinHeight="450" MinWidth="800" MaxHeight="450" MaxWidth="800">
+        Title="MainWindow" Height="600" Width="1000" MinHeight="600" MinWidth="1000" MaxHeight="600" MaxWidth="1000">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush>
@@ -28,6 +28,14 @@
                 </Button.Background>
             </Button>
             <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Aktualizacja_Click" Content="Aktualizacja">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#C53783" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Import_Click" Content="Import">
                 <Button.Background>
                     <LinearGradientBrush>
                         <GradientStop Color="#C53783" Offset="1.0"/>

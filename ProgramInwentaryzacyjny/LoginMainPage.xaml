@@ -28,7 +28,7 @@
         <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" FontSize="35" FontWeight="Bold" Foreground="#C53783" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Program Inwentaryzacyjny</Label>
 
         <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="20" Name="Użytkownik">Użytkownik:</Label>
-        <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Height="35" Width="350" Name="txt_użytkownik" FontSize="20"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Height="30" Width="350" Name="txt_użytkownik" FontSize="20"></TextBox>
         <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="20" Name="Hasło">Hasło:</Label>
         <PasswordBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Height="30" Width="350" Name="txt_hasło" FontSize="20"></PasswordBox>
 

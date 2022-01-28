@@ -11,17 +11,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="5*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <Label HorizontalAlignment="Center" Margin="5" FontSize="30" FontWeight="Bold" Foreground="#C53783">Wyszukaj produkt po symbolu</Label>
-            <TextBox Width="300" HorizontalAlignment="Center" Margin="5" Name="txt_wyszukiwarka" KeyUp="txt_wyszukiwarka_KeyPress"></TextBox>
+            <Label HorizontalAlignment="Center" Margin="5" FontSize="30" FontWeight="Bold" Foreground="#C53783">Wyszukaj produkt po symbolu lub nazwie</Label>
+            <TextBox Width="300" HorizontalAlignment="Center" Margin="5" Name="txt_wyszukiwarka" KeyUp="txt_wyszukiwarka_KeyPress" FontSize="16"></TextBox>
         </StackPanel>
         
-        <DataGrid Grid.Row="1" Name="ProduktDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="10" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="SelectProcudct">
+        <DataGrid Grid.Row="1" Name="ProduktDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="10" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="SelectProcudct" Width="auto">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" FontSize="20"/>
-                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20"/>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" FontSize="20" Width="auto"/>
+                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20" Width="auto"/>
+                <DataGridTextColumn Header="Ilość" Binding="{Binding Ilość}" FontSize="20" Width="auto"/>
+                <DataGridTextColumn Header="Jedn. miary" Binding="{Binding Jedn_miary}" FontSize="20" Width="auto"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -31,17 +34,36 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             
+
             <StackPanel Grid.Column="0">
-                <StackPanel Orientation="Horizontal">
-                    <Label FontSize="16" FontWeight="Bold">Symbol:</Label>
-                    <TextBox Name="txt_symbolEdit" Margin="10" Width="300"></TextBox>
+                <StackPanel Orientation="Vertical">
+                    <Label FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Symbol:</Label>
+                    <TextBox Name="txt_symbolEdit" Margin="5" Width="200" FontSize="16"></TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label FontSize="16" FontWeight="Bold">Nazwa:</Label>
-                    <TextBox Name="txt_nazwaEdit" Margin="10" Width="300"></TextBox>
+                <StackPanel Orientation="Vertical">
+                    <Label FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Nazwa:</Label>
+                    <TextBox Name="txt_nazwaEdit" Margin="5" Width="200" FontSize="16"></TextBox>
                 </StackPanel>
-                
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <StackPanel Orientation="Vertical">
+                    <Label FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Ilość:</Label>
+                    <TextBox Name="txt_ilośćEdit" Margin="5" Width="200" FontSize="16"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Jednostka:</Label>
+                    <TextBox Name="txt_jednostkaEdit" Margin="5" Width="200" FontSize="16"></TextBox>
+                </StackPanel>
             </StackPanel>
         </Grid>
+        <Button Grid.Row="3" Content="Edytuj" Margin="15" Width="200" FontSize="20" FontWeight="Bold" FontStyle="Italic" Click="EditProduct">
+            <Button.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#C53783" Offset="1.0"/>
+                    <GradientStop Color="White" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Page>
