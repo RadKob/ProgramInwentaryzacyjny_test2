@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
@@ -79,22 +81,50 @@ namespace ProgramInwentaryzacyjny
         }
         private void EditProduct(object sender, RoutedEventArgs e)
         {
-            if (txt_symbolEdit.Text == string.Empty || txt_nazwaEdit.Text == string.Empty || txt_ilośćEdit.Text == string.Empty || txt_jednostkaEdit.Text == string.Empty)
+            DateTime localDate = DateTime.Now;
+            int number;
+            if(Int32.TryParse(txt_ilośćEdit.Text, out number))
             {
-                MessageBox.Show("Parametry nie mogą być puste");
+                if (txt_symbolEdit.Text == string.Empty || txt_nazwaEdit.Text == string.Empty || txt_ilośćEdit.Text == string.Empty || txt_jednostkaEdit.Text == string.Empty)
+                {
+                    MessageBox.Show("Parametry nie mogą być puste");
+                }
+                else
+                {
+                    if (Convert.ToInt32(txt_ilośćEdit.Text) < NotZero())
+                    {
+                        string txtQuery = @"Update Products set Ilość = (Select Ilość from Products where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_ilośćEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
+                                            "Insert into Zużycie (Symbol, Nazwa_produktu, Wydano, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_ilośćEdit.Text + "', '" + localDate.ToString() + "');";
+                        ConnectToDatabase();
+                        sql_cmd = sql_con.CreateCommand();
+                        sql_cmd.CommandText = txtQuery;
+                        sql_cmd.ExecuteNonQuery();
+                        CloseConnection();
+                        MessageBox.Show("Produkt zaaktualizowany");
+                        LoadProducts();
+                        ClearTxtBoxs();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Uwaga - niedozwolona operacja, próbujesz zrobić stan ujemny");
+                    }
+                }
             }
             else
             {
-                string txtQuery = "Update Products set Nazwa_produktu='" + txt_nazwaEdit.Text + "', Ilość='" + txt_ilośćEdit.Text + "', Jedn_miary='" + txt_jednostkaEdit.Text + "' where Symbol='" + txt_symbolEdit.Text + "'";
-                ConnectToDatabase();
-                sql_cmd = sql_con.CreateCommand();
-                sql_cmd.CommandText = txtQuery;
-                sql_cmd.ExecuteNonQuery();
-                CloseConnection();
-                MessageBox.Show("Produkt zaaktualizowany");
-                LoadProducts();
-                ClearTxtBoxs();
+                MessageBox.Show("Uwaga - niedozwolona operacja, wpisałeś literę");
             }
+            
+        }
+        private int NotZero()
+        {
+            string txtQuery = "Select Ilość from Products where Symbol ='" + txt_symbolEdit.Text + "'";
+            ConnectToDatabase();
+            sql_cmd = sql_con.CreateCommand();
+            sql_cmd.CommandText = txtQuery;
+            int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+            CloseConnection();
+            return notzero;
         }
     }
 }
