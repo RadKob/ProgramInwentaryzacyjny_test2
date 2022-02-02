@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
@@ -68,7 +67,7 @@ namespace ProgramInwentaryzacyjny
             {
                 txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
                 txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
-                txt_ilośćEdit.Text = dataRowView["Ilość"].ToString();
+                //txt_ilośćEdit.Text = dataRowView["Ilość"].ToString();
                 txt_jednostkaEdit.Text = dataRowView["Jedn_miary"].ToString();
             }
         }

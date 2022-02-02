@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Windows;
 
 
@@ -27,6 +28,7 @@ namespace ProgramInwentaryzacyjny
         public MainWindow()
         {
             InitializeComponent();
+            SetTimwAndBackup();
         }
         private void Magazyn_Click(object sender, RoutedEventArgs e)
         {
@@ -54,9 +56,25 @@ namespace ProgramInwentaryzacyjny
             }
             CloseConnection();
         }
+        private void Administrator_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new AdministratorPage();
+        }
         private void Wyjście_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void SetTimwAndBackup()
+        {
+            DateTime thisDay = DateTime.Today;
+            txt_datetime.Text = thisDay.ToString("d");
+            if(thisDay.Day == 15)
+            {
+                string srcPath = "BazaDoProgramu.db";
+                string dstPath = "BazaDoProgramu_copy.db";
+
+                File.Copy(srcPath, dstPath, true);
+            }
         }
     }
 }

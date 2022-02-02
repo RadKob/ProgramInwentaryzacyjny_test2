@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProgramInwentaryzacyjny"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" MinHeight="600" MinWidth="1000" MaxHeight="600" MaxWidth="1000">
+        Title="MainWindow" Height="600" Width="1150" MinHeight="600" MinWidth="1150" MaxHeight="600" MaxWidth="1150">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush>
@@ -27,7 +27,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Aktualizacja_Click" Content="Aktualizacja">
+            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Aktualizacja_Click" Content="Aktualizacja stanu">
                 <Button.Background>
                     <LinearGradientBrush>
                         <GradientStop Color="#C53783" Offset="1.0"/>
@@ -51,6 +51,14 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Administrator_Click" Content="Administrator">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#C53783" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
             <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Wyjście_Click" Content="Wyjście">
                 <Button.Background>
                     <LinearGradientBrush>
@@ -60,6 +68,7 @@
                 </Button.Background>
             </Button>
         </StackPanel>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold" Foreground="#C53783" Margin="15" Name="txt_datetime" TextWrapping="Wrap"></TextBlock>
         <Frame Grid.Column="1" x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

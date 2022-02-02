@@ -1,0 +1,75 @@
+﻿<Page x:Class="ProgramInwentaryzacyjny.AdministratorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ProgramInwentaryzacyjny"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="1000"
+      Title="AdministratorPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Column="1" Name="ProduktDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="5" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" Width="auto" SelectionChanged="SelectProcudct">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" FontSize="20" Width="auto">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20" Width="auto">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Jedn. miary" Binding="{Binding Jedn_miary}" FontSize="20" Width="auto">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Column="0">
+            <Label HorizontalAlignment="Center" Margin="5" FontSize="30" FontWeight="Bold" Foreground="#C53783" Content="CRUD"></Label>
+            <TextBox Width="200" HorizontalAlignment="Center" Margin="10" Name="txt_symbolAdd" FontSize="16">Symbol</TextBox>
+            <TextBox Width="200" HorizontalAlignment="Center" Margin="10" Name="txt_nazwaAdd" FontSize="16">Nazwa_produktu</TextBox>
+            <TextBox Width="200" HorizontalAlignment="Center" Margin="10" Name="txt_jednAdd" FontSize="16">Jednostka_miary</TextBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15">
+                <Button Content="Dodaj" Margin="15" Width="100" Height="auto" FontSize="20" FontWeight="Bold" FontStyle="Italic" Click="AddProduct">
+                    <Button.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#C53783" Offset="1.0"/>
+                            <GradientStop Color="White" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Content="Edytuj" Margin="15" Width="100" Height="auto" FontSize="20" FontWeight="Bold" FontStyle="Italic" Click="EditProduct">
+                    <Button.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#C53783" Offset="1.0"/>
+                            <GradientStop Color="White" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Content="Usuń" Margin="15" Width="100" Height="auto" FontSize="20" FontWeight="Bold" FontStyle="Italic" Click="DeleteProduct">
+                    <Button.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#C53783" Offset="1.0"/>
+                            <GradientStop Color="White" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
