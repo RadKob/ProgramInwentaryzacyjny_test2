@@ -68,7 +68,7 @@
                 </Button.Background>
             </Button>
         </StackPanel>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold" Foreground="#C53783" Margin="15" Name="txt_datetime" TextWrapping="Wrap"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold" Foreground="#C53783" Margin="15" Name="txt_datetime" TextWrapping="Wrap">Data</TextBlock>
         <Frame Grid.Column="1" x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

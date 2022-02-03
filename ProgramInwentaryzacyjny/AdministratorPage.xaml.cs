@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -122,6 +123,16 @@ namespace ProgramInwentaryzacyjny
             int check = Convert.ToInt32(sql_cmd.ExecuteScalar());
             if(check == 1) { return true; } // jest
             else { return false; } // nie ma
+        }
+        // bezpieczeństwo
+        // kopia pliku bazy sqlite na przycisk
+        private void CopyDatabase(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Wykonano ręczną kopie zapasową bazy danych");
+            string srcPath = "BazaDoProgramu.db";
+            string dstPath = "BazaDoProgramu_copy.db";
+
+            File.Copy(srcPath, dstPath, true);
         }
     }
 }

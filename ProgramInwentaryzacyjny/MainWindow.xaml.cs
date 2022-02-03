@@ -28,7 +28,7 @@ namespace ProgramInwentaryzacyjny
         public MainWindow()
         {
             InitializeComponent();
-            SetTimwAndBackup();
+            SetTimeAndBackup();
         }
         private void Magazyn_Click(object sender, RoutedEventArgs e)
         {
@@ -64,12 +64,14 @@ namespace ProgramInwentaryzacyjny
         {
             this.Close();
         }
-        private void SetTimwAndBackup()
+        // kopia pliku bazy sqlite 15-go dnia
+        private void SetTimeAndBackup()
         {
             DateTime thisDay = DateTime.Today;
             txt_datetime.Text = thisDay.ToString("d");
             if(thisDay.Day == 15)
             {
+                MessageBox.Show("Wykonano automatyczną kopie zapasową bazy danych");
                 string srcPath = "BazaDoProgramu.db";
                 string dstPath = "BazaDoProgramu_copy.db";
 

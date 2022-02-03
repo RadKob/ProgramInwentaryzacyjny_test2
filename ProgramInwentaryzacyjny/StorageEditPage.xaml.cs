@@ -65,65 +65,65 @@ namespace ProgramInwentaryzacyjny
             DataRowView dataRowView = dataGrid.SelectedItem as DataRowView;
             if (dataRowView != null)
             {
-                txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
-                txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
+                //txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
+                //txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
                 //txt_ilośćEdit.Text = dataRowView["Ilość"].ToString();
-                txt_jednostkaEdit.Text = dataRowView["Jedn_miary"].ToString();
+                //txt_jednostkaEdit.Text = dataRowView["Jedn_miary"].ToString();
             }
         }
         private void ClearTxtBoxs()
         {
-            txt_symbolEdit.Clear();
-            txt_nazwaEdit.Clear();
-            txt_ilośćEdit.Clear();
-            txt_jednostkaEdit.Clear();
+            //txt_symbolEdit.Clear();
+            //txt_nazwaEdit.Clear();
+            //txt_ilośćEdit.Clear();
+            //txt_jednostkaEdit.Clear();
         }
-        private void EditProduct(object sender, RoutedEventArgs e)
-        {
-            DateTime localDate = DateTime.Now;
-            int number;
-            if(Int32.TryParse(txt_ilośćEdit.Text, out number))
-            {
-                if (txt_symbolEdit.Text == string.Empty || txt_nazwaEdit.Text == string.Empty || txt_ilośćEdit.Text == string.Empty || txt_jednostkaEdit.Text == string.Empty)
-                {
-                    MessageBox.Show("Parametry nie mogą być puste");
-                }
-                else
-                {
-                    if (Convert.ToInt32(txt_ilośćEdit.Text) < NotZero())
-                    {
-                        string txtQuery = @"Update Products set Ilość = (Select Ilość from Products where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_ilośćEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
-                                            "Insert into Zużycie (Symbol, Nazwa_produktu, Wydano, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_ilośćEdit.Text + "', '" + localDate.ToString() + "');";
-                        ConnectToDatabase();
-                        sql_cmd = sql_con.CreateCommand();
-                        sql_cmd.CommandText = txtQuery;
-                        sql_cmd.ExecuteNonQuery();
-                        CloseConnection();
-                        MessageBox.Show("Produkt zaaktualizowany");
-                        LoadProducts();
-                        ClearTxtBoxs();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Uwaga - niedozwolona operacja, próbujesz zrobić stan ujemny");
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Uwaga - niedozwolona operacja, wpisałeś literę");
-            }
+        //private void EditProduct(object sender, RoutedEventArgs e)
+        //{
+        //    DateTime localDate = DateTime.Now;
+        //    int number;
+        //    if(Int32.TryParse(txt_ilośćEdit.Text, out number))
+        //    {
+        //        if (txt_ilośćEdit.Text == string.Empty)
+        //        {
+        //            MessageBox.Show("Parametr nie może być pusty");
+        //        }
+        //        else
+        //        {
+        //            if (Convert.ToInt32(txt_ilośćEdit.Text) <= NotZero())
+        //            {
+        //                string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol_produktu ='" + txt_symbolEdit.Text + "') + '" + txt_ilośćEdit.Text + "' where Symbol_produktu = '" + txt_symbolEdit.Text + "';" +
+        //                                    "Insert into Zużycie (Symbol, Nazwa_produktu, Wydano, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_ilośćEdit.Text + "', '" + localDate.ToString() + "');";
+        //                ConnectToDatabase();
+        //                sql_cmd = sql_con.CreateCommand();
+        //                sql_cmd.CommandText = txtQuery;
+        //                sql_cmd.ExecuteNonQuery();
+        //                CloseConnection();
+        //                MessageBox.Show("Produkt zaaktualizowany");
+        //                LoadProducts();
+        //                ClearTxtBoxs();
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Uwaga - niedozwolona operacja, próbujesz zrobić stan ujemny");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Uwaga - niedozwolona operacja, wpisałeś literę");
+        //    }
             
-        }
-        private int NotZero()
-        {
-            string txtQuery = "Select Ilość from Products where Symbol ='" + txt_symbolEdit.Text + "'";
-            ConnectToDatabase();
-            sql_cmd = sql_con.CreateCommand();
-            sql_cmd.CommandText = txtQuery;
-            int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
-            CloseConnection();
-            return notzero;
-        }
+        //}
+        //private int NotZero()
+        //{
+        //    string txtQuery = "Select Ilość from Stan left join Products on Stan.Symbol_produktu = Products.Symbol where Symbol ='" + txt_symbolEdit.Text + "'";
+        //    ConnectToDatabase();
+        //    sql_cmd = sql_con.CreateCommand();
+        //    sql_cmd.CommandText = txtQuery;
+        //    int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+        //    CloseConnection();
+        //    return notzero;
+        //}
     }
 }

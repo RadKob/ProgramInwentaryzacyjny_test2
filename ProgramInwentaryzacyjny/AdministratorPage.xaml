@@ -70,6 +70,14 @@
                     </Button.Background>
                 </Button>
             </StackPanel>
+            <Button Content="Ręczna kopia zapasowa" Margin="15" Width="auto" Height="auto" FontSize="20" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" Click="CopyDatabase">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#C53783" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>
