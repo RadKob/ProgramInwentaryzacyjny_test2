@@ -1,7 +1,9 @@
-﻿using ProgramInwentaryzacyjny.Data;
+﻿using IronPdf;
+using ProgramInwentaryzacyjny.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 
@@ -42,19 +44,33 @@ namespace ProgramInwentaryzacyjny
         {
             MainFrame.Content = new ImportPage();
         }
+        // raport produktow zerowych
         private void Raport_Click(object sender, RoutedEventArgs e)
         {
-            string txtQuery = "Select * from Products where Ilość != 0";
+            string txtQuery = "Select Products.Symbol, Products.Nazwa_produktu, Stan.Ilość from Products left join Stan on Products.Symbol = Stan.Symbol where Ilość = 0";
             ConnectToDatabase();
             sql_cmd = new SQLiteCommand(txtQuery, sql_con);
             SQLiteDataReader dr = sql_cmd.ExecuteReader();
             List<Product> products_list = new List<Product>();
             while (dr.Read())
             {
-                Product product = new Product(dr["Symbol"].ToString(),dr["Nazwa_produktu"].ToString(),Convert.ToInt32(dr["Ilość"]),dr["Jedn_miary"].ToString());
+                Product product = new Product(dr["Symbol"].ToString(),dr["Nazwa_produktu"].ToString(),Convert.ToInt32(dr["Ilość"]));
                 products_list.Add(product);
             }
             CloseConnection();
+            var renderer = new HtmlToPdf();
+            string template = "Rozważ dostawę następujących produktów:</br>";
+            foreach (var item in products_list)
+            {
+                template += item.Symbol + " " + item.Nazwa + "</br>";
+            }
+            string path = "Dostawa.pdf";
+            var PDF = renderer.RenderHtmlAsPdf(template);
+            PDF.SaveAs(path);
+            var process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = path;
+            process.Start();
         }
         private void Administrator_Click(object sender, RoutedEventArgs e)
         {

@@ -39,7 +39,8 @@ namespace ProgramInwentaryzacyjny
                 if (CheckProductsTable() == true) { MessageBox.Show("Produkt już istnieje"); }
                 else
                 {
-                    string txtQuery = "Insert into Products (Symbol, Nazwa_produktu, Jedn_miary) values ('" + txt_symbolAdd.Text + "', '" + txt_nazwaAdd.Text + "', '" + txt_jednAdd.Text + "')";
+                    string txtQuery = @"Insert into Products (Symbol, Nazwa_produktu, Jedn_miary) values ('" + txt_symbolAdd.Text + "', '" + txt_nazwaAdd.Text + "', '" + txt_jednAdd.Text + "');" +
+                                        "Insert into Stan (Symbol, Ilość) values ('" + txt_symbolAdd.Text + "', 0);";
                     ConnectToDatabase();
                     sql_cmd = sql_con.CreateCommand();
                     sql_cmd.CommandText = txtQuery;
@@ -83,7 +84,8 @@ namespace ProgramInwentaryzacyjny
         // D - usuwanie (delete)
         private void DeleteProduct(object sender, RoutedEventArgs e)
         {
-            string txtQuery = "Delete from Products where Symbol = '" + txt_symbolAdd.Text + "'";
+            string txtQuery = @"Delete from Products where Symbol = '" + txt_symbolAdd.Text + "';" +
+                                "Delete from Stan where Symbol = '" + txt_symbolAdd.Text + "';";
             ConnectToDatabase();
             sql_cmd = sql_con.CreateCommand();
             sql_cmd.CommandText = txtQuery;

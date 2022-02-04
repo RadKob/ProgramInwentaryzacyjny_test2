@@ -32,7 +32,7 @@ namespace ProgramInwentaryzacyjny
         }
         private void LoadProducts()
         {
-            string txtQuery = "Select Nazwa_produktu, Ilość from Stan left join Products on Products.Symbol = Stan.Symbol_produktu where Ilość < 0";
+            string txtQuery = "Select Nazwa_produktu, Ilość from Stan left join Products on Products.Symbol = Stan.Symbol";
             ConnectToDatabase();
             sql_cmd = sql_con.CreateCommand();
             dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);

@@ -59,71 +59,83 @@ namespace ProgramInwentaryzacyjny
                 CloseConnection();
             }
         }
+        // aktualizacja texblockow po wybraniu produktu z siatki
         private void SelectProcudct(object sender, SelectionChangedEventArgs e)
         {
             DataGrid dataGrid = sender as DataGrid;
             DataRowView dataRowView = dataGrid.SelectedItem as DataRowView;
             if (dataRowView != null)
             {
-                //txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
-                //txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
-                //txt_ilośćEdit.Text = dataRowView["Ilość"].ToString();
-                //txt_jednostkaEdit.Text = dataRowView["Jedn_miary"].ToString();
+                txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
+                txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
             }
         }
+        // czyszczenie texboxa
         private void ClearTxtBoxs()
         {
-            //txt_symbolEdit.Clear();
-            //txt_nazwaEdit.Clear();
-            //txt_ilośćEdit.Clear();
-            //txt_jednostkaEdit.Clear();
+            txt_iloscEdit.Clear();
         }
-        //private void EditProduct(object sender, RoutedEventArgs e)
-        //{
-        //    DateTime localDate = DateTime.Now;
-        //    int number;
-        //    if(Int32.TryParse(txt_ilośćEdit.Text, out number))
-        //    {
-        //        if (txt_ilośćEdit.Text == string.Empty)
-        //        {
-        //            MessageBox.Show("Parametr nie może być pusty");
-        //        }
-        //        else
-        //        {
-        //            if (Convert.ToInt32(txt_ilośćEdit.Text) <= NotZero())
-        //            {
-        //                string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol_produktu ='" + txt_symbolEdit.Text + "') + '" + txt_ilośćEdit.Text + "' where Symbol_produktu = '" + txt_symbolEdit.Text + "';" +
-        //                                    "Insert into Zużycie (Symbol, Nazwa_produktu, Wydano, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_ilośćEdit.Text + "', '" + localDate.ToString() + "');";
-        //                ConnectToDatabase();
-        //                sql_cmd = sql_con.CreateCommand();
-        //                sql_cmd.CommandText = txtQuery;
-        //                sql_cmd.ExecuteNonQuery();
-        //                CloseConnection();
-        //                MessageBox.Show("Produkt zaaktualizowany");
-        //                LoadProducts();
-        //                ClearTxtBoxs();
-        //            }
-        //            else
-        //            {
-        //                MessageBox.Show("Uwaga - niedozwolona operacja, próbujesz zrobić stan ujemny");
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Uwaga - niedozwolona operacja, wpisałeś literę");
-        //    }
-            
-        //}
-        //private int NotZero()
-        //{
-        //    string txtQuery = "Select Ilość from Stan left join Products on Stan.Symbol_produktu = Products.Symbol where Symbol ='" + txt_symbolEdit.Text + "'";
-        //    ConnectToDatabase();
-        //    sql_cmd = sql_con.CreateCommand();
-        //    sql_cmd.CommandText = txtQuery;
-        //    int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
-        //    CloseConnection();
-        //    return notzero;
-        //}
+        // ręczna aktualizacja stanu produktu
+        private void EditProduct(object sender, RoutedEventArgs e)
+        {
+            DateTime localDate = DateTime.Now;
+            int number;
+            if (txt_iloscEdit.Text != string.Empty)
+            {
+                if (Int32.TryParse(txt_iloscEdit.Text, out number)==false)
+                {
+                    MessageBox.Show("Uwaga - niedozwolona operacja, wpisałeś literę");
+                }
+                else
+                {
+                    if (Math.Abs(Convert.ToInt32(txt_iloscEdit.Text)) <= NotZero() && Convert.ToInt32(txt_iloscEdit.Text) < 0)
+                    {
+                        string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
+                                            "Insert into Zuzycie (Symbol, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString() + "');";
+                        ConnectToDatabase();
+                        sql_cmd = sql_con.CreateCommand();
+                        sql_cmd.CommandText = txtQuery;
+                        sql_cmd.ExecuteNonQuery();
+                        CloseConnection();
+                        MessageBox.Show("Produkt " + txt_nazwaEdit.Text + " został wydany w liczbie sztuk " + txt_iloscEdit.Text);
+                        LoadProducts();
+                        ClearTxtBoxs();
+                    }
+                    else if(Convert.ToInt32(txt_iloscEdit.Text) > 0)
+                    {
+                        string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
+                                            "Insert into Zuzycie (Symbol, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString() + "');";
+                        ConnectToDatabase();
+                        sql_cmd = sql_con.CreateCommand();
+                        sql_cmd.CommandText = txtQuery;
+                        sql_cmd.ExecuteNonQuery();
+                        CloseConnection();
+                        MessageBox.Show("Produkt " + txt_nazwaEdit.Text + " został dodany w liczbie sztuk " + txt_iloscEdit.Text);
+                        LoadProducts();
+                        ClearTxtBoxs();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Uwaga - próbujesz zrobić stan ujemny");
+                        ClearTxtBoxs();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Parametr nie może być pusty");
+            }
+        }
+        // iloscproduktu w chwili aktualizacji jego stanu
+        private int NotZero()
+        {
+            string txtQuery = "Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "'";
+            ConnectToDatabase();
+            sql_cmd = sql_con.CreateCommand();
+            sql_cmd.CommandText = txtQuery;
+            int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+            CloseConnection();
+            return notzero;
+        }
     }
 }
