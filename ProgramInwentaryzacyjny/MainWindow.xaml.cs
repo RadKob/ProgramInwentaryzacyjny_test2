@@ -7,6 +7,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+
 
 namespace ProgramInwentaryzacyjny
 {
@@ -47,30 +51,47 @@ namespace ProgramInwentaryzacyjny
         // raport produktow zerowych
         private void Raport_Click(object sender, RoutedEventArgs e)
         {
-            string txtQuery = "Select Products.Symbol, Products.Nazwa_produktu, Stan.Ilość from Products left join Stan on Products.Symbol = Stan.Symbol where Ilość = 0";
+            string txtQuery = "Select Nazwa_Produktu, Sum(Wydanie) as Wydanie, Data from Products left join Zuzycie on Products.Symbol = Zuzycie.Symbol where Wydanie < 0 Group by Nazwa_produktu";
             ConnectToDatabase();
             sql_cmd = new SQLiteCommand(txtQuery, sql_con);
             SQLiteDataReader dr = sql_cmd.ExecuteReader();
-            List<Product> products_list = new List<Product>();
+            List<ProductR> products_list = new List<ProductR>();
             while (dr.Read())
             {
-                Product product = new Product(dr["Symbol"].ToString(),dr["Nazwa_produktu"].ToString(),Convert.ToInt32(dr["Ilość"]));
+                ProductR product = new ProductR(dr["Nazwa_produktu"].ToString(), Convert.ToInt32(dr["Wydanie"]), dr["Data"].ToString());
                 products_list.Add(product);
             }
             CloseConnection();
-            var renderer = new HtmlToPdf();
-            string template = "Rozważ dostawę następujących produktów:</br>";
-            foreach (var item in products_list)
+            using (SpreadsheetDocument document = SpreadsheetDocument.Create("raport.xlsx", SpreadsheetDocumentType.Workbook))
             {
-                template += item.Symbol + " " + item.Nazwa + "</br>";
+                WorkbookPart workbookPart = document.AddWorkbookPart();
+                workbookPart.Workbook = new Workbook();
+
+                WorksheetPart worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
+                worksheetPart.Worksheet = new Worksheet();
+
+                Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
+
+                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Arkusz 1" };
+                sheets.Append(sheet);
+
+                workbookPart.Workbook.Save();
+
+                SheetData sheetData = worksheetPart.Worksheet.AppendChild(new SheetData());
+
+                foreach (var item in products_list)
+                {
+                    Row row = new Row();
+                    Cell cell1 = new Cell() { CellValue = new CellValue(item.Nazwa), DataType = CellValues.String };
+                    Cell cell2 = new Cell() { CellValue = new CellValue(item.Wydanie), DataType = CellValues.String };
+                    Cell cell3 = new Cell() { CellValue = new CellValue(item.Data), DataType = CellValues.String };
+                    row.Append(cell1);
+                    row.Append(cell2);
+                    row.Append(cell3);
+                    sheetData.AppendChild(row);
+                }
+                worksheetPart.Worksheet.Save();
             }
-            string path = "Dostawa.pdf";
-            var PDF = renderer.RenderHtmlAsPdf(template);
-            PDF.SaveAs(path);
-            var process = new Process();
-            process.StartInfo.UseShellExecute = true;
-            process.StartInfo.FileName = path;
-            process.Start();
         }
         private void Administrator_Click(object sender, RoutedEventArgs e)
         {
@@ -83,9 +104,10 @@ namespace ProgramInwentaryzacyjny
         // kopia pliku bazy sqlite 15-go dnia
         private void SetTimeAndBackup()
         {
+            DateTime copydaytime = DateTime.Today;
             DateTime thisDay = DateTime.Today;
             txt_datetime.Text = thisDay.ToString("d");
-            if(thisDay.Day == 15)
+            if(copydaytime == thisDay)
             {
                 MessageBox.Show("Wykonano automatyczną kopie zapasową bazy danych");
                 string srcPath = "BazaDoProgramu.db";

@@ -91,7 +91,7 @@ namespace ProgramInwentaryzacyjny
                     if (Math.Abs(Convert.ToInt32(txt_iloscEdit.Text)) <= NotZero() && Convert.ToInt32(txt_iloscEdit.Text) < 0)
                     {
                         string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
-                                            "Insert into Zuzycie (Symbol, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString() + "');";
+                                            "Insert into Zuzycie (Symbol, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
                         sql_cmd.CommandText = txtQuery;
@@ -104,7 +104,7 @@ namespace ProgramInwentaryzacyjny
                     else if(Convert.ToInt32(txt_iloscEdit.Text) > 0)
                     {
                         string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
-                                            "Insert into Zuzycie (Symbol, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString() + "');";
+                                            "Insert into Zuzycie (Symbol, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
                         sql_cmd.CommandText = txtQuery;

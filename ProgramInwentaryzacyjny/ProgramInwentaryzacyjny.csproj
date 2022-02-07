@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="27.2.1" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.15.0" />
     <PackageReference Include="ExcelMapper" Version="5.2.352" />
     <PackageReference Include="IronPdf" Version="2022.1.4599" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.1" />
