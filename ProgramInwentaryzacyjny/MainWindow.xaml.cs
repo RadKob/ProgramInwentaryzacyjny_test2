@@ -51,47 +51,7 @@ namespace ProgramInwentaryzacyjny
         // raport produktow zerowych
         private void Raport_Click(object sender, RoutedEventArgs e)
         {
-            string txtQuery = "Select Nazwa_Produktu, Sum(Wydanie) as Wydanie, Data from Products left join Zuzycie on Products.Symbol = Zuzycie.Symbol where Wydanie < 0 Group by Nazwa_produktu";
-            ConnectToDatabase();
-            sql_cmd = new SQLiteCommand(txtQuery, sql_con);
-            SQLiteDataReader dr = sql_cmd.ExecuteReader();
-            List<ProductR> products_list = new List<ProductR>();
-            while (dr.Read())
-            {
-                ProductR product = new ProductR(dr["Nazwa_produktu"].ToString(), Convert.ToInt32(dr["Wydanie"]), dr["Data"].ToString());
-                products_list.Add(product);
-            }
-            CloseConnection();
-            using (SpreadsheetDocument document = SpreadsheetDocument.Create("raport.xlsx", SpreadsheetDocumentType.Workbook))
-            {
-                WorkbookPart workbookPart = document.AddWorkbookPart();
-                workbookPart.Workbook = new Workbook();
-
-                WorksheetPart worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
-                worksheetPart.Worksheet = new Worksheet();
-
-                Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
-
-                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Arkusz 1" };
-                sheets.Append(sheet);
-
-                workbookPart.Workbook.Save();
-
-                SheetData sheetData = worksheetPart.Worksheet.AppendChild(new SheetData());
-
-                foreach (var item in products_list)
-                {
-                    Row row = new Row();
-                    Cell cell1 = new Cell() { CellValue = new CellValue(item.Nazwa), DataType = CellValues.String };
-                    Cell cell2 = new Cell() { CellValue = new CellValue(item.Wydanie), DataType = CellValues.String };
-                    Cell cell3 = new Cell() { CellValue = new CellValue(item.Data), DataType = CellValues.String };
-                    row.Append(cell1);
-                    row.Append(cell2);
-                    row.Append(cell3);
-                    sheetData.AppendChild(row);
-                }
-                worksheetPart.Worksheet.Save();
-            }
+            MainFrame.Content = new RaportPage();
         }
         private void Administrator_Click(object sender, RoutedEventArgs e)
         {

@@ -46,9 +46,5 @@ namespace ProgramInwentaryzacyjny
             CloseConnection();
             MessageBox.Show("Produkty zostały dodane");
         }
-        private void ImportPDF(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
