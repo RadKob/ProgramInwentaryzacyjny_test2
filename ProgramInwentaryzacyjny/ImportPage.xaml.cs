@@ -38,13 +38,30 @@ namespace ProgramInwentaryzacyjny
             var product = new ExcelMapper(file).Fetch<Product>();
             foreach(var pt in product)
             {
-                string txtQuery = "Update Stan set Ilość = (Select Ilość from Stan where Symbol = '" + pt.Symbol + "') + '" + pt.Ilość + "' where Symbol = '" + pt.Symbol + "';";
-                sql_cmd = sql_con.CreateCommand();
-                sql_cmd.CommandText = txtQuery;
-                sql_cmd.ExecuteNonQuery();
+                if (CheckProductInBase(pt.Symbol) == true)
+                {
+                    string txtQuery = "Update Stan set Ilość = (Select Ilość from Stan where Symbol = '" + pt.Symbol + "') + '" + pt.Ilość + "' where Symbol = '" + pt.Symbol + "';";
+                    sql_cmd = sql_con.CreateCommand();
+                    sql_cmd.CommandText = txtQuery;
+                    sql_cmd.ExecuteNonQuery();
+                }
+                else MessageBox.Show("Takiego produktu nie ma w bazie");
             }
             CloseConnection();
             MessageBox.Show("Produkty zostały dodane");
+        }
+        // sprawdzenie czy produkt z dostawy jest w magazynie
+        private bool CheckProductInBase(string symbol)
+        {
+            string txtQuery = "Select count(1) from Stan where Symbol = '" + symbol + "';";
+            ConnectToDatabase();
+            SQLiteCommand sql_cmd = new SQLiteCommand(txtQuery, sql_con);
+            sql_cmd.ExecuteNonQuery();
+            SQLiteDataReader dataReader = sql_cmd.ExecuteReader();
+            int count = 0;
+            while (dataReader.Read()) { count++; }
+            if (count == 1){ return true; }
+            else { return false; }
         }
     }
 }
