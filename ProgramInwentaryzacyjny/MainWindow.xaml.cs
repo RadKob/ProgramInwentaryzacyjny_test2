@@ -1,15 +1,7 @@
-﻿using IronPdf;
-using ProgramInwentaryzacyjny.Data;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
-
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace ProgramInwentaryzacyjny

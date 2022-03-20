@@ -45,7 +45,18 @@ namespace ProgramInwentaryzacyjny
                     sql_cmd.CommandText = txtQuery;
                     sql_cmd.ExecuteNonQuery();
                 }
-                else MessageBox.Show("Takiego produktu nie ma w bazie");
+                else if (CheckProductInBase(pt.Symbol) == false)
+                {
+                    MessageBox.Show("Produktu nie było w bazie więc zostanie dodany automatycznie. Zaaktualizuj jego stan ręcznie");
+
+                    string txtQuery = @"Insert into Products (Symbol, Nazwa_produktu, Jedn_miary) values ('" + pt.Symbol + "', '" + pt.Nazwa + "', '" + pt.Jedn + "');" +
+                                        "Insert into Stan (Symbol, Ilość) values ('" + pt.Symbol + "', 0);";
+                    ConnectToDatabase();
+                    sql_cmd = sql_con.CreateCommand();
+                    sql_cmd.CommandText = txtQuery;
+                    sql_cmd.ExecuteNonQuery();
+                    CloseConnection();
+                }
             }
             CloseConnection();
             MessageBox.Show("Produkty zostały dodane");
@@ -53,7 +64,7 @@ namespace ProgramInwentaryzacyjny
         // sprawdzenie czy produkt z dostawy jest w magazynie
         private bool CheckProductInBase(string symbol)
         {
-            string txtQuery = "Select count(1) from Stan where Symbol = '" + symbol + "';";
+            string txtQuery = "Select Symbol from Stan where Symbol = '" + symbol + "';";
             ConnectToDatabase();
             SQLiteCommand sql_cmd = new SQLiteCommand(txtQuery, sql_con);
             sql_cmd.ExecuteNonQuery();

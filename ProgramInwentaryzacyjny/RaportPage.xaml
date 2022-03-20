@@ -14,15 +14,43 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <DatePicker Grid.Row="0" Grid.Column="0" Name="data_A" FontSize="16"/>
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Podgląd wydania dziennego" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
 
-        <DatePicker Grid.Row="0" Grid.Column="1" Name="data_B" FontSize="16"/>
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Name="ZuzycieDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="20" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" Width="650">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20" Width="1*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Wydanie" Binding="{Binding Wydanie}" FontSize="20" Width="1*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
-        <Button Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="20" Height="50" Width="200" FontSize="20" FontWeight="Bold" Content="Pobierz raport" Click="RaportExcel">
+        <DatePicker Grid.Row="2" Grid.Column="0" Name="data_A" FontSize="16" Width="200"/>
+
+        <DatePicker Grid.Row="2" Grid.Column="1" Name="data_B" FontSize="16" Width="200"/>
+
+        <Button Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="20" Height="50" Width="260" FontSize="20" FontWeight="Bold" Content="Pobierz raport okresowy" Click="RaportExcel">
             <Button.Background>
                 <LinearGradientBrush>
                     <GradientStop Color="#C53783" Offset="1.0"/>
