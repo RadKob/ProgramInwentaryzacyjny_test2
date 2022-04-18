@@ -14,23 +14,17 @@ namespace ProgramInwentaryzacyjny
         private SQLiteCommand sql_cmd;
         private SQLiteDataAdapter dataAdapter;
         DataTable dt = new DataTable();
-
-        // konstruktor strony
         public AdministratorPage()
         {
             InitializeComponent();
             LoadProducts();
         }
-        // polaczenie z baza
         private void ConnectToDatabase()
         {
             sql_con = new SQLiteConnection(connection_string);
             sql_con.Open();
         }
-        // zamkniecie polaczenia
         private void CloseConnection() { sql_con.Close(); }
-        // CRUD administratorski
-        // C - dodawanie (create)
         private void AddProduct(object sender, RoutedEventArgs e)
         {
             if (txt_symbolAdd.Text == string.Empty || txt_nazwaAdd.Text == string.Empty || txt_jednAdd.Text == string.Empty) { MessageBox.Show("Parametry nie mogą być puste"); }
@@ -52,7 +46,6 @@ namespace ProgramInwentaryzacyjny
                 }
             }
         }
-        // R - podglad (read)
         private void LoadProducts()
         {
             string txtQuery = "Select * from Products";
@@ -64,7 +57,6 @@ namespace ProgramInwentaryzacyjny
             ProduktDataGrid.ItemsSource = dt.DefaultView;
             CloseConnection();
         }
-        // U - edycja (update)
         private void EditProduct(object sender, RoutedEventArgs e)
         {
             if (txt_symbolAdd.Text == string.Empty || txt_nazwaAdd.Text == string.Empty || txt_jednAdd.Text == string.Empty) { MessageBox.Show("Parametry nie mogą być puste"); }
@@ -81,7 +73,6 @@ namespace ProgramInwentaryzacyjny
                 ClearTxtBoxs();
             } 
         }
-        // D - usuwanie (delete)
         private void DeleteProduct(object sender, RoutedEventArgs e)
         {
             string txtQuery = @"Delete from Products where Symbol = '" + txt_symbolAdd.Text + "';" +
@@ -95,8 +86,6 @@ namespace ProgramInwentaryzacyjny
             LoadProducts();
             ClearTxtBoxs();
         }
-        // Dodatki do CRUD'a
-        // autouzupelniane texboxww
         private void SelectProcudct(object sender, SelectionChangedEventArgs e)
         {
             DataGrid dataGrid = sender as DataGrid;
@@ -108,14 +97,12 @@ namespace ProgramInwentaryzacyjny
                 txt_jednAdd.Text = dataRowView["Jedn_miary"].ToString();
             }
         }
-        // czyszczenie texboxow
         private void ClearTxtBoxs()
         {
             txt_symbolAdd.Clear();
             txt_nazwaAdd.Clear();
             txt_jednAdd.Clear();
         }
-        // czy produkt jest juz w bazie?
         private bool CheckProductsTable()
         {
             string txtQuery = "Select count(1) from Products where Symbol = '" + txt_symbolAdd.Text + "'";
@@ -123,11 +110,9 @@ namespace ProgramInwentaryzacyjny
             sql_cmd = sql_con.CreateCommand();
             sql_cmd.CommandText = txtQuery;
             int check = Convert.ToInt32(sql_cmd.ExecuteScalar());
-            if(check == 1) { return true; } // jest
-            else { return false; } // nie ma
+            if(check == 1) { return true; }
+            else { return false; }
         }
-        // bezpieczeństwo
-        // kopia pliku bazy sqlite na przycisk
         private void CopyDatabase(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Wykonano ręczną kopie zapasową bazy danych");

@@ -7,9 +7,6 @@ using System.Windows.Input;
 
 namespace ProgramInwentaryzacyjny
 {
-    /// <summary>
-    /// Logika interakcji dla klasy StorageEditPage.xaml
-    /// </summary>
     public partial class StorageEditPage : Page
     {
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";
@@ -50,7 +47,7 @@ namespace ProgramInwentaryzacyjny
             }
             else
             {
-                string txtQuery = string.Format("Select * from Products where Symbol like '%{0}%' or Nazwa_produktu like '%{0}%'", txt_wyszukiwarka.Text);
+                string txtQuery = string.Format("Select Symbol, Nazwa_produktu from Products where Symbol like '%{0}%' or Nazwa_produktu like '%{0}%'", txt_wyszukiwarka.Text);
                 sql_cmd = sql_con.CreateCommand();
                 dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);
                 dt = new DataTable("Products");
@@ -59,7 +56,6 @@ namespace ProgramInwentaryzacyjny
                 CloseConnection();
             }
         }
-        // aktualizacja texblockow po wybraniu produktu z siatki
         private void SelectProcudct(object sender, SelectionChangedEventArgs e)
         {
             DataGrid dataGrid = sender as DataGrid;
@@ -68,14 +64,20 @@ namespace ProgramInwentaryzacyjny
             {
                 txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
                 txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
+
+                string txtQuery = "Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "'";
+                ConnectToDatabase();
+                sql_cmd = sql_con.CreateCommand();
+                sql_cmd.CommandText = txtQuery;
+                int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+                txt_stan.Text = notzero.ToString();
+                CloseConnection();
             }
         }
-        // czyszczenie texboxa
         private void ClearTxtBoxs()
         {
             txt_iloscEdit.Clear();
         }
-        // ręczna aktualizacja stanu produktu
         private void EditProduct(object sender, RoutedEventArgs e)
         {
             DateTime localDate = DateTime.Now;
@@ -126,7 +128,6 @@ namespace ProgramInwentaryzacyjny
                 MessageBox.Show("Parametr nie może być pusty");
             }
         }
-        // iloscproduktu w chwili aktualizacji jego stanu
         private int NotZero()
         {
             string txtQuery = "Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "'";

@@ -5,9 +5,6 @@ using System.Windows;
 
 namespace ProgramInwentaryzacyjny
 {
-    /// <summary>
-    /// Logika interakcji dla klasy LoginMainPage.xaml
-    /// </summary>
     public partial class LoginMainPage : Window
     {
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";

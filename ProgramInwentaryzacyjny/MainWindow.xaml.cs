@@ -6,23 +6,8 @@ using System.Windows;
 
 namespace ProgramInwentaryzacyjny
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";
-        private SQLiteConnection sql_con;
-        private SQLiteCommand sql_cmd;
-        private void ConnectToDatabase()
-        {
-            sql_con = new SQLiteConnection(connection_string);
-            sql_con.Open();
-        }
-        private void CloseConnection()
-        {
-            sql_con.Close();
-        }
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +25,6 @@ namespace ProgramInwentaryzacyjny
         {
             MainFrame.Content = new ImportPage();
         }
-        // raport produktow zerowych
         private void Raport_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new RaportPage();
@@ -53,7 +37,6 @@ namespace ProgramInwentaryzacyjny
         {
             this.Close();
         }
-        // kopia pliku bazy sqlite 15-go dnia
         private void SetTimeAndBackup()
         {
             DateTime copydaytime = DateTime.Today;

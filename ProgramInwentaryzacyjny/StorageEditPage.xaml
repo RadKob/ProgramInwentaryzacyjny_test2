@@ -29,13 +29,16 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" FontSize="20" FontWeight="Bold" Foreground="#C53783">Symbol:</Label>
                 <TextBlock Grid.Column="1" Grid.Row="0" FontSize="20" FontWeight="Bold" Foreground="#C53783" VerticalAlignment="Center" TextWrapping="Wrap" Name="txt_symbolEdit"></TextBlock>
                 <Label Grid.Column="0" Grid.Row="1" FontSize="20" FontWeight="Bold" Foreground="#C53783">Nazwa produktu:</Label>
-                <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Foreground="#C53783" VerticalAlignment="Center" TextWrapping="Wrap" Name="txt_nazwaEdit" ></TextBlock>
-                <Label Grid.Column="0" Grid.Row="2" FontSize="20" FontWeight="Bold" Foreground="#C53783">Ilość:</Label>
-                <TextBox Grid.Column="1" Grid.Row="2" FontSize="20" FontWeight="Bold" Height="25" VerticalAlignment="Center" Name="txt_iloscEdit"></TextBox>
+                <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Foreground="#C53783" VerticalAlignment="Center" TextWrapping="Wrap" Name="txt_nazwaEdit"></TextBlock>
+                <Label Grid.Column="0" Grid.Row="2" FontSize="20" FontWeight="Bold" Foreground="#C53783">Stan faktyczny:</Label>
+                <TextBlock Grid.Column="1" Grid.Row="2" FontSize="20" FontWeight="Bold" Foreground="#C53783" VerticalAlignment="Center" TextWrapping="Wrap" Name="txt_stan"></TextBlock>
+                <Label Grid.Column="0" Grid.Row="3" FontSize="20" FontWeight="Bold" Foreground="#C53783">Ilość:</Label>
+                <TextBox Grid.Column="1" Grid.Row="3" FontSize="20" FontWeight="Bold" Height="25" VerticalAlignment="Center" Name="txt_iloscEdit"></TextBox>
             </Grid>
             <Button Margin="15" HorizontalAlignment="Center" Width="200" Height="30" Content="Wydanie / dodanie" FontSize="16" FontWeight="Bold" Click="EditProduct">
                 <Button.Background>

@@ -7,34 +7,26 @@ using System.Windows.Controls;
 
 namespace ProgramInwentaryzacyjny
 {
-    /// <summary>
-    /// Logika interakcji dla klasy ImportPage.xaml
-    /// </summary>
     public partial class ImportPage : Page
     {
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
         DataTable dt = new DataTable();
-
-        // konstruktor strony
         public ImportPage()
         {
             InitializeComponent();
         }
-        // polaczenie z baza
         private void ConnectToDatabase()
         {
             sql_con = new SQLiteConnection(connection_string);
             sql_con.Open();
         }
-        // zamkniecie polaczenia
         private void CloseConnection() { sql_con.Close(); }
-        // import dostawy z pliku excel
         private void ImportCSV(object sender, RoutedEventArgs e)
         {
             ConnectToDatabase();
-            string file = @"test.xlsx";
+            string file = @"dostawa.xlsm";
             var product = new ExcelMapper(file).Fetch<Product>();
             foreach(var pt in product)
             {
@@ -47,10 +39,10 @@ namespace ProgramInwentaryzacyjny
                 }
                 else if (CheckProductInBase(pt.Symbol) == false)
                 {
-                    MessageBox.Show("Produktu nie było w bazie więc zostanie dodany automatycznie. Zaaktualizuj jego stan ręcznie");
+                    MessageBox.Show("Produktu " + pt.Nazwa + " nie było w bazie więc zostanie dodany do niej automatycznie.");
 
                     string txtQuery = @"Insert into Products (Symbol, Nazwa_produktu, Jedn_miary) values ('" + pt.Symbol + "', '" + pt.Nazwa + "', '" + pt.Jedn + "');" +
-                                        "Insert into Stan (Symbol, Ilość) values ('" + pt.Symbol + "', 0);";
+                                        "Insert into Stan (Symbol, Ilość) values ('" + pt.Symbol + "', '" + pt.Ilość + "');";
                     ConnectToDatabase();
                     sql_cmd = sql_con.CreateCommand();
                     sql_cmd.CommandText = txtQuery;
@@ -61,7 +53,6 @@ namespace ProgramInwentaryzacyjny
             CloseConnection();
             MessageBox.Show("Produkty zostały dodane");
         }
-        // sprawdzenie czy produkt z dostawy jest w magazynie
         private bool CheckProductInBase(string symbol)
         {
             string txtQuery = "Select Symbol from Stan where Symbol = '" + symbol + "';";

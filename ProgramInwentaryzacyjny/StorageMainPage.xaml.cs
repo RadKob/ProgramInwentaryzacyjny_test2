@@ -6,9 +6,6 @@ using System.Windows.Controls;
 
 namespace ProgramInwentaryzacyjny
 {
-    /// <summary>
-    /// Logika interakcji dla klasy StorageMainPage.xaml
-    /// </summary>
     public partial class StorageMainPage : Page
     {
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";

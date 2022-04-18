@@ -10,9 +10,6 @@ using System.Windows;
 
 namespace ProgramInwentaryzacyjny
 {
-    /// <summary>
-    /// Logika interakcji dla klasy RaportPage.xaml
-    /// </summary>
     public partial class RaportPage : System.Windows.Controls.Page
     {
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";
@@ -25,13 +22,11 @@ namespace ProgramInwentaryzacyjny
             InitializeComponent();
             LoadProducts();
         }
-        // polaczenie z baza
         private void ConnectToDatabase()
         {
             sql_con = new SQLiteConnection(connection_string);
             sql_con.Open();
         }
-        // zamkniecie polaczenia
         private void CloseConnection() { sql_con.Close(); }
         private void RaportExcel(object sender, RoutedEventArgs e)
         {
