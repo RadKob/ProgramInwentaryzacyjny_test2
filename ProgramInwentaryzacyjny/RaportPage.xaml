@@ -24,7 +24,7 @@
 
         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Name="ZuzycieDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="20" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" Width="650">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20" Width="1*">
+                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20" Width="8*">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="HorizontalAlignment" Value="Center"/>

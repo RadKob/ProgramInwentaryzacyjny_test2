@@ -16,6 +16,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10" Background="White">
             <TextBlock Margin="15" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">Menu</TextBlock>
@@ -70,5 +71,8 @@
         </StackPanel>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" FontWeight="Bold" Foreground="#C53783" Margin="15" Name="txt_datetime" TextWrapping="Wrap">Data</TextBlock>
         <Frame Grid.Column="1" x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+        <Button Grid.Column="3" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10 10 10 25">
+            <Image Source="/Dicon.png" Width="10"></Image>
+        </Button>
     </Grid>
 </Window>

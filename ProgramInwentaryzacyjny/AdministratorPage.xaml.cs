@@ -75,16 +75,20 @@ namespace ProgramInwentaryzacyjny
         }
         private void DeleteProduct(object sender, RoutedEventArgs e)
         {
-            string txtQuery = @"Delete from Products where Symbol = '" + txt_symbolAdd.Text + "';" +
+            MessageBoxResult m = MessageBox.Show("Czy na pewno chcesz usunąć produkt? Zostanie on wymazany całkowicie.", "Usuwanie", MessageBoxButton.YesNo);
+            if (m == MessageBoxResult.Yes)
+            {
+                string txtQuery = @"Delete from Products where Symbol = '" + txt_symbolAdd.Text + "';" +
                                 "Delete from Stan where Symbol = '" + txt_symbolAdd.Text + "';";
-            ConnectToDatabase();
-            sql_cmd = sql_con.CreateCommand();
-            sql_cmd.CommandText = txtQuery;
-            sql_cmd.ExecuteNonQuery();
-            CloseConnection();
-            MessageBox.Show("Produkt usunięty");
-            LoadProducts();
-            ClearTxtBoxs();
+                ConnectToDatabase();
+                sql_cmd = sql_con.CreateCommand();
+                sql_cmd.CommandText = txtQuery;
+                sql_cmd.ExecuteNonQuery();
+                CloseConnection();
+                MessageBox.Show("Produkt usunięty");
+                LoadProducts();
+                ClearTxtBoxs();
+            }
         }
         private void SelectProcudct(object sender, SelectionChangedEventArgs e)
         {
