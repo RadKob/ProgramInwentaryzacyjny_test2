@@ -53,7 +53,7 @@
             <Label HorizontalAlignment="Center" Margin="5" FontSize="20" FontWeight="Bold" Foreground="#C53783">Wyszukaj produkt</Label>
             <TextBox Width="300" HorizontalAlignment="Center" Margin="5" Name="txt_wyszukiwarka" KeyUp="txt_wyszukiwarka_KeyPress" FontSize="16"></TextBox>
         </StackPanel>
-        <DataGrid Grid.Column="1" Grid.Row="1" Margin="10" Name="ProduktDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="SelectProcudct">
+        <DataGrid Grid.Column="1" Grid.Row="1" Margin="10" Name="ProduktDataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="SelectProcudct" AlternatingRowBackground="#E6A0C8">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" FontSize="20" Width="auto">
                     <DataGridTextColumn.HeaderStyle>
@@ -78,63 +78,5 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <Label HorizontalAlignment="Center" Margin="5" FontSize="30" FontWeight="Bold" Foreground="#C53783">Wyszukaj produkt po symbolu lub nazwie</Label>
-            <TextBox Width="300" HorizontalAlignment="Center" Margin="5" Name="txt_wyszukiwarka" KeyUp="txt_wyszukiwarka_KeyPress" FontSize="16"></TextBox>
-        </StackPanel>
-        
-        <DataGrid Grid.Row="1" Name="ProduktDataGrid" Background="WhiteSmoke" AlternatingRowBackground="#E6A0C8" Margin="10" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="SelectProcudct" Width="auto">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" FontSize="20" Width="auto">
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Nazwa produktu" Binding="{Binding Nazwa_produktu}" FontSize="20" Width="5*">
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
-                </DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0">
-                <StackPanel Orientation="Vertical">
-                    <Label FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Symbol:</Label>
-                    <TextBlock Name="txt_symbolEdit" Margin="5" Width="200" FontSize="16"></TextBlock>
-                </StackPanel>
-                <StackPanel Orientation="Vertical">
-                    <Label FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Nazwa:</Label>
-                    <TextBlock Name="txt_nazwaEdit" Margin="5" Width="200" FontSize="16"></TextBlock>
-                </StackPanel>
-                <StackPanel Orientation="Vertical">
-                    <Label FontSize="16" FontWeight="Bold" HorizontalAlignment="Center">Ilość:</Label>
-                    <TextBox Name="txt_ilośćEdit" Margin="5" Width="60" FontSize="16"></TextBox>
-                </StackPanel>
-            </StackPanel>
-        </Grid>
-        <Button Grid.Row="3" Content="Wydanie" Margin="15" Width="200" FontSize="20" FontWeight="Bold" FontStyle="Italic" Click="EditProduct">
-            <Button.Background>
-                <LinearGradientBrush>
-                    <GradientStop Color="#C53783" Offset="1.0"/>
-                    <GradientStop Color="White" Offset="0.5"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>-->
     </Grid>
 </Page>

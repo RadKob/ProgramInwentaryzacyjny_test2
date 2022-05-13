@@ -9,7 +9,6 @@ namespace ProgramInwentaryzacyjny.Data
         public string Nazwa { get; set; }
         public int Wydanie { get; set; }
         public string Data { get; set; }
-        //public string Jedn_miary { get; set; }
         public ProductR(string nazwa, int wydanie, string data)
         {
             Nazwa = nazwa;
