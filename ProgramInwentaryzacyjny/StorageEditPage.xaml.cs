@@ -14,6 +14,7 @@ namespace ProgramInwentaryzacyjny
         private SQLiteCommand sql_cmd;
         private SQLiteDataAdapter dataAdapter;
         DataTable dt = new DataTable();
+        string table = "";
         public StorageEditPage()
         {
             InitializeComponent();
@@ -47,7 +48,7 @@ namespace ProgramInwentaryzacyjny
             }
             else
             {
-                string txtQuery = string.Format("Select Symbol, Nazwa_produktu from Products where Symbol like '%{0}%' or Nazwa_produktu like '%{0}%'", txt_wyszukiwarka.Text);
+                string txtQuery = string.Format("Select Symbol, Nazwa_produktu, Jedn_miary, Id_magazynu from Products where Symbol like '%{0}%' or Nazwa_produktu like '%{0}%' or Id_magazynu like '%{0}%'", txt_wyszukiwarka.Text);
                 sql_cmd = sql_con.CreateCommand();
                 dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);
                 dt = new DataTable("Products");
@@ -60,18 +61,32 @@ namespace ProgramInwentaryzacyjny
         {
             DataGrid dataGrid = sender as DataGrid;
             DataRowView dataRowView = dataGrid.SelectedItem as DataRowView;
+            txt_wyszukiwarka.Clear();
             if (dataRowView != null)
             {
                 txt_symbolEdit.Text = dataRowView["Symbol"].ToString();
                 txt_nazwaEdit.Text = dataRowView["Nazwa_produktu"].ToString();
-
-                string txtQuery = "Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "'";
-                ConnectToDatabase();
-                sql_cmd = sql_con.CreateCommand();
-                sql_cmd.CommandText = txtQuery;
-                int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
-                txt_stan.Text = notzero.ToString();
-                CloseConnection();
+                table = dataRowView["Id_magazynu"].ToString();
+                if(table == "aud7")
+                {
+                    string txtQuery = "Select Ilość from StanAud7 where Symbol ='" + txt_symbolEdit.Text + "'";
+                    ConnectToDatabase();
+                    sql_cmd = sql_con.CreateCommand();
+                    sql_cmd.CommandText = txtQuery;
+                    int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+                    txt_stan.Text = notzero.ToString();
+                    CloseConnection();
+                }
+                else if(table == "uro")
+                {
+                    string txtQuery = "Select Ilość from StanUro where Symbol ='" + txt_symbolEdit.Text + "'";
+                    ConnectToDatabase();
+                    sql_cmd = sql_con.CreateCommand();
+                    sql_cmd.CommandText = txtQuery;
+                    int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+                    txt_stan.Text = notzero.ToString();
+                    CloseConnection();
+                } 
             }
         }
         private void ClearTxtBoxs()
@@ -90,9 +105,9 @@ namespace ProgramInwentaryzacyjny
                 }
                 else
                 {
-                    if (Math.Abs(Convert.ToInt32(txt_iloscEdit.Text)) <= NotZero() && Convert.ToInt32(txt_iloscEdit.Text) < 0)
+                    if (Math.Abs(Convert.ToInt32(txt_iloscEdit.Text)) <= NotZero(table) && Convert.ToInt32(txt_iloscEdit.Text) < 0 && table == "aud7")
                     {
-                        string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
+                        string txtQuery = @"Update StanAud7 set Ilość = (Select Ilość from StanAud7 where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
                                             "Insert into Zuzycie (Symbol, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
@@ -103,9 +118,35 @@ namespace ProgramInwentaryzacyjny
                         LoadProducts();
                         ClearTxtBoxs();
                     }
-                    else if(Convert.ToInt32(txt_iloscEdit.Text) > 0)
+                    else if (Math.Abs(Convert.ToInt32(txt_iloscEdit.Text)) <= NotZero(table) && Convert.ToInt32(txt_iloscEdit.Text) < 0 && table == "uro")
                     {
-                        string txtQuery = @"Update Stan set Ilość = (Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
+                        string txtQuery = @"Update StanUro set Ilość = (Select Ilość from StanUro where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
+                                            "Insert into Zuzycie (Symbol, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
+                        ConnectToDatabase();
+                        sql_cmd = sql_con.CreateCommand();
+                        sql_cmd.CommandText = txtQuery;
+                        sql_cmd.ExecuteNonQuery();
+                        CloseConnection();
+                        MessageBox.Show("Produkt " + txt_nazwaEdit.Text + " został wydany w liczbie sztuk " + txt_iloscEdit.Text);
+                        LoadProducts();
+                        ClearTxtBoxs();
+                    }
+                    else if(Convert.ToInt32(txt_iloscEdit.Text) > 0 && table == "aud7")
+                    {
+                        string txtQuery = @"Update StanAud7 set Ilość = (Select Ilość from StanAud7 where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
+                                            "Insert into Zuzycie (Symbol, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
+                        ConnectToDatabase();
+                        sql_cmd = sql_con.CreateCommand();
+                        sql_cmd.CommandText = txtQuery;
+                        sql_cmd.ExecuteNonQuery();
+                        CloseConnection();
+                        MessageBox.Show("Produkt " + txt_nazwaEdit.Text + " został dodany w liczbie sztuk " + txt_iloscEdit.Text);
+                        LoadProducts();
+                        ClearTxtBoxs();
+                    }
+                    else if (Convert.ToInt32(txt_iloscEdit.Text) > 0 && table == "uro")
+                    {
+                        string txtQuery = @"Update StanUro set Ilość = (Select Ilość from StanUro where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
                                             "Insert into Zuzycie (Symbol, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
@@ -128,14 +169,27 @@ namespace ProgramInwentaryzacyjny
                 MessageBox.Show("Parametr nie może być pusty");
             }
         }
-        private int NotZero()
+        private int NotZero(string table)
         {
-            string txtQuery = "Select Ilość from Stan where Symbol ='" + txt_symbolEdit.Text + "'";
-            ConnectToDatabase();
-            sql_cmd = sql_con.CreateCommand();
-            sql_cmd.CommandText = txtQuery;
-            int notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
-            CloseConnection();
+            int notzero = 0;
+            if(table == "aud7")
+            {
+                string txtQuery = "Select Ilość from StanAud7 where Symbol ='" + txt_symbolEdit.Text + "'";
+                ConnectToDatabase();
+                sql_cmd = sql_con.CreateCommand();
+                sql_cmd.CommandText = txtQuery;
+                notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+                CloseConnection();
+            }
+            else if(table == "uro")
+            {
+                string txtQuery = "Select Ilość from StanUro where Symbol ='" + txt_symbolEdit.Text + "'";
+                ConnectToDatabase();
+                sql_cmd = sql_con.CreateCommand();
+                sql_cmd.CommandText = txtQuery;
+                notzero = Convert.ToInt32(sql_cmd.ExecuteScalar());
+                CloseConnection();
+            }
             return notzero;
         }
     }

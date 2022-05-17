@@ -14,6 +14,7 @@ namespace ProgramInwentaryzacyjny
         private SQLiteCommand sql_cmd;
         private SQLiteDataAdapter dataAdapter;
         DataTable dt = new DataTable();
+        string table = "";
         public AdministratorPage()
         {
             InitializeComponent();
@@ -27,22 +28,38 @@ namespace ProgramInwentaryzacyjny
         private void CloseConnection() { sql_con.Close(); }
         private void AddProduct(object sender, RoutedEventArgs e)
         {
-            if (txt_symbolAdd.Text == string.Empty || txt_nazwaAdd.Text == string.Empty || txt_jednAdd.Text == string.Empty) { MessageBox.Show("Parametry nie mogą być puste"); }
+            if (txt_symbolAdd.Text == string.Empty || txt_nazwaAdd.Text == string.Empty || txt_jednAdd.Text == string.Empty || txt_idMag.Text == string.Empty) { MessageBox.Show("Parametry nie mogą być puste"); }
             else
             {
                 if (CheckProductsTable() == true) { MessageBox.Show("Produkt już istnieje"); }
                 else
                 {
-                    string txtQuery = @"Insert into Products (Symbol, Nazwa_produktu, Jedn_miary) values ('" + txt_symbolAdd.Text + "', '" + txt_nazwaAdd.Text + "', '" + txt_jednAdd.Text + "');" +
-                                        "Insert into Stan (Symbol, Ilość) values ('" + txt_symbolAdd.Text + "', 0);";
-                    ConnectToDatabase();
-                    sql_cmd = sql_con.CreateCommand();
-                    sql_cmd.CommandText = txtQuery;
-                    sql_cmd.ExecuteNonQuery();
-                    CloseConnection();
-                    MessageBox.Show("Produkt dodany");
-                    LoadProducts();
-                    ClearTxtBoxs();
+                    if(txt_idMag.Text == "aud7")
+                    {
+                        string txtQuery = @"Insert into Products (Symbol, Nazwa_produktu, Jedn_miary, Id_magazynu) values ('" + txt_symbolAdd.Text + "', '" + txt_nazwaAdd.Text + "', '" + txt_jednAdd.Text + "','" + txt_idMag.Text + "');" +
+                                        "Insert into StanAud7 (Symbol, Ilość) values ('" + txt_symbolAdd.Text + "', 0);";
+                        ConnectToDatabase();
+                        sql_cmd = sql_con.CreateCommand();
+                        sql_cmd.CommandText = txtQuery;
+                        sql_cmd.ExecuteNonQuery();
+                        CloseConnection();
+                        MessageBox.Show("Produkt dodany");
+                        LoadProducts();
+                        ClearTxtBoxs();
+                    }
+                    else if(txt_idMag.Text == "uro")
+                    {
+                        string txtQuery = @"Insert into Products (Symbol, Nazwa_produktu, Jedn_miary, Id_magazynu) values ('" + txt_symbolAdd.Text + "', '" + txt_nazwaAdd.Text + "', '" + txt_jednAdd.Text + "','" + txt_idMag.Text + "');" +
+                                        "Insert into StanUro (Symbol, Ilość) values ('" + txt_symbolAdd.Text + "', 0);";
+                        ConnectToDatabase();
+                        sql_cmd = sql_con.CreateCommand();
+                        sql_cmd.CommandText = txtQuery;
+                        sql_cmd.ExecuteNonQuery();
+                        CloseConnection();
+                        MessageBox.Show("Produkt dodany");
+                        LoadProducts();
+                        ClearTxtBoxs();
+                    }
                 }
             }
         }
@@ -62,7 +79,7 @@ namespace ProgramInwentaryzacyjny
             if (txt_symbolAdd.Text == string.Empty || txt_nazwaAdd.Text == string.Empty || txt_jednAdd.Text == string.Empty) { MessageBox.Show("Parametry nie mogą być puste"); }
             else
             {
-                string txtQuery = "Update Products set Nazwa_Produktu = '" + txt_nazwaAdd.Text + "', Jedn_miary = '" + txt_jednAdd.Text + "' where Symbol = '" + txt_symbolAdd.Text + "'";
+                string txtQuery = "Update Products set Nazwa_Produktu = '" + txt_nazwaAdd.Text + "', Jedn_miary = '" + txt_jednAdd.Text + "', Id_magazynu = '" + txt_idMag.Text + "' where Symbol = '" + txt_symbolAdd.Text + "'";
                 ConnectToDatabase();
                 sql_cmd = sql_con.CreateCommand();
                 sql_cmd.CommandText = txtQuery;
@@ -78,16 +95,32 @@ namespace ProgramInwentaryzacyjny
             MessageBoxResult m = MessageBox.Show("Czy na pewno chcesz usunąć produkt? Zostanie on wymazany całkowicie.", "Usuwanie", MessageBoxButton.YesNo);
             if (m == MessageBoxResult.Yes)
             {
-                string txtQuery = @"Delete from Products where Symbol = '" + txt_symbolAdd.Text + "';" +
-                                "Delete from Stan where Symbol = '" + txt_symbolAdd.Text + "';";
-                ConnectToDatabase();
-                sql_cmd = sql_con.CreateCommand();
-                sql_cmd.CommandText = txtQuery;
-                sql_cmd.ExecuteNonQuery();
-                CloseConnection();
-                MessageBox.Show("Produkt usunięty");
-                LoadProducts();
-                ClearTxtBoxs();
+                if(table == "aud7")
+                {
+                    string txtQuery = @"Delete from Products where Symbol = '" + txt_symbolAdd.Text + "';" +
+                                "Delete from StanAud7 where Symbol = '" + txt_symbolAdd.Text + "';";
+                    ConnectToDatabase();
+                    sql_cmd = sql_con.CreateCommand();
+                    sql_cmd.CommandText = txtQuery;
+                    sql_cmd.ExecuteNonQuery();
+                    CloseConnection();
+                    MessageBox.Show("Produkt usunięty");
+                    LoadProducts();
+                    ClearTxtBoxs();
+                }
+                else if(table == "uro")
+                {
+                    string txtQuery = @"Delete from Products where Symbol = '" + txt_symbolAdd.Text + "';" +
+                                "Delete from StanUro where Symbol = '" + txt_symbolAdd.Text + "';";
+                    ConnectToDatabase();
+                    sql_cmd = sql_con.CreateCommand();
+                    sql_cmd.CommandText = txtQuery;
+                    sql_cmd.ExecuteNonQuery();
+                    CloseConnection();
+                    MessageBox.Show("Produkt usunięty");
+                    LoadProducts();
+                    ClearTxtBoxs();
+                }
             }
         }
         private void SelectProcudct(object sender, SelectionChangedEventArgs e)
@@ -99,6 +132,8 @@ namespace ProgramInwentaryzacyjny
                 txt_symbolAdd.Text = dataRowView["Symbol"].ToString();
                 txt_nazwaAdd.Text = dataRowView["Nazwa_produktu"].ToString();
                 txt_jednAdd.Text = dataRowView["Jedn_miary"].ToString();
+                txt_idMag.Text = dataRowView["Id_magazynu"].ToString();
+                table = dataRowView["Id_magazynu"].ToString();
             }
         }
         private void ClearTxtBoxs()
@@ -106,6 +141,7 @@ namespace ProgramInwentaryzacyjny
             txt_symbolAdd.Clear();
             txt_nazwaAdd.Clear();
             txt_jednAdd.Clear();
+            txt_idMag.Clear();
         }
         private bool CheckProductsTable()
         {

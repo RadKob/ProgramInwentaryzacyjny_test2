@@ -14,20 +14,31 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10" Background="White">
             <TextBlock Margin="15" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">Menu</TextBlock>
-            <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Magazyn_Click" Content="Magazyn">
-                <Button.Background>
-                    <LinearGradientBrush>
-                        <GradientStop Color="#C53783" Offset="1.0"/>
-                        <GradientStop Color="White" Offset="0.5"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+            <StackPanel Orientation="Horizontal">
+                <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="MagazynAud7_Click" Content="Audytorium 7" Width="auto">
+                    <Button.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#C53783" Offset="1.0"/>
+                            <GradientStop Color="White" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="MagazynUro_Click" Content="Urodzinkowy" Width="auto">
+                    <Button.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#C53783" Offset="1.0"/>
+                            <GradientStop Color="White" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            
             <Button Margin="10" FontSize="18" FontWeight="Bold" FontStyle="Italic" Click="Aktualizacja_Click" Content="Aktualizacja stanu">
                 <Button.Background>
                     <LinearGradientBrush>

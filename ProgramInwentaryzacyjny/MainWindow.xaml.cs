@@ -16,7 +16,6 @@ namespace ProgramInwentaryzacyjny
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
-        private SQLiteDataAdapter dataAdapter;
         private void ConnectToDatabase()
         {
             sql_con = new SQLiteConnection(connection_string);
@@ -31,9 +30,13 @@ namespace ProgramInwentaryzacyjny
             InitializeComponent();
             SetTimeAndBackup();
         }
-        private void Magazyn_Click(object sender, RoutedEventArgs e)
+        private void MagazynAud7_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new StorageMainPage();
+            MainFrame.Content = new StorageAud7Page();
+        }
+        private void MagazynUro_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new StorageUroPage();
         }
         private void Aktualizacja_Click(object sender, RoutedEventArgs e)
         {
@@ -71,7 +74,7 @@ namespace ProgramInwentaryzacyjny
         }
         private void ExportStorage_Click(object sender, RoutedEventArgs e)
         {
-            string txtQuery = "Select Nazwa_produktu, Ilość from Stan left join Products on Products.Symbol = Stan.Symbol";
+            string txtQuery = "Select Nazwa_produktu, Ilość from StanAud7 left join Products on Products.Symbol = StanAud7.Symbol";
             ConnectToDatabase();
             sql_cmd = new SQLiteCommand(txtQuery, sql_con);
             SQLiteDataReader dr = sql_cmd.ExecuteReader();
@@ -92,7 +95,7 @@ namespace ProgramInwentaryzacyjny
 
                 Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
 
-                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Arkusz 1" };
+                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Raport" };
                 sheets.Append(sheet);
 
                 workbookPart.Workbook.Save();
@@ -109,6 +112,7 @@ namespace ProgramInwentaryzacyjny
                     sheetData.AppendChild(row);
                 }
                 worksheetPart.Worksheet.Save();
+                MessageBox.Show("Raport utworzony");
             }
         }
     }

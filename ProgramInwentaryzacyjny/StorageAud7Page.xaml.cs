@@ -1,19 +1,17 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Data.SQLite;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace ProgramInwentaryzacyjny
 {
-    public partial class StorageMainPage : Page
+    public partial class StorageAud7Page : Page
     {
         readonly string connection_string = "Data Source=BazaDoProgramu.db;Version=3;New=false;Compress=True;";
         private SQLiteConnection sql_con;
         private SQLiteCommand sql_cmd;
         private SQLiteDataAdapter dataAdapter;
         DataTable dt = new DataTable();
-        public StorageMainPage()
+        public StorageAud7Page()
         {
             InitializeComponent();
             LoadProducts();
@@ -29,7 +27,7 @@ namespace ProgramInwentaryzacyjny
         }
         private void LoadProducts()
         {
-            string txtQuery = "Select Nazwa_produktu, Ilość from Stan left join Products on Products.Symbol = Stan.Symbol";
+            string txtQuery = "Select Nazwa_produktu, Ilość from StanAud7 left join Products on Products.Symbol = StanAud7.Symbol";
             ConnectToDatabase();
             sql_cmd = sql_con.CreateCommand();
             dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);

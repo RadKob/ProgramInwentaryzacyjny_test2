@@ -44,6 +44,7 @@
             <TextBox Width="200" HorizontalAlignment="Center" Margin="10" Name="txt_symbolAdd" FontSize="16">Symbol</TextBox>
             <TextBox Width="200" HorizontalAlignment="Center" Margin="10" Name="txt_nazwaAdd" FontSize="16">Nazwa_produktu</TextBox>
             <TextBox Width="200" HorizontalAlignment="Center" Margin="10" Name="txt_jednAdd" FontSize="16">Jednostka_miary</TextBox>
+            <TextBox Width="200" HorizontalAlignment="Center" Margin="10" Name="txt_idMag" FontSize="16">Id_magazynu</TextBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15">
                 <Button Content="Zapisz" Margin="15" Width="100" Height="auto" FontSize="20" FontWeight="Bold" FontStyle="Italic" Click="EditProduct">
                     <Button.Background>
