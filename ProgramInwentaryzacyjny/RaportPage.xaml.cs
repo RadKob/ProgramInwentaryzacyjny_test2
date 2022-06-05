@@ -32,7 +32,7 @@ namespace ProgramInwentaryzacyjny
         {
             string dataA = data_A.Text;
             string dataB = data_B.Text;
-            string txtQuery = "Select Nazwa_Produktu, Sum(Wydanie) as Wydanie, Data from Products left join Zuzycie on Products.Symbol = Zuzycie.Symbol where Wydanie < 0 and Data between '" + dataA + "' and '" + dataB + "' Group by Nazwa_produktu";
+            string txtQuery = "Select Zuzycie.Nazwa_Produktu, Sum(Wydanie) as Wydanie, Data from Products left join Zuzycie on Products.Symbol = Zuzycie.Symbol where Wydanie < 0 and Data between '" + dataA + "' and '" + dataB + "' Group by Zuzycie.Nazwa_produktu";
             ConnectToDatabase();
             sql_cmd = new SQLiteCommand(txtQuery, sql_con);
             SQLiteDataReader dr = sql_cmd.ExecuteReader();
@@ -53,7 +53,7 @@ namespace ProgramInwentaryzacyjny
 
                 Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
 
-                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Arkusz 1" };
+                Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Wydanie" };
                 sheets.Append(sheet);
 
                 workbookPart.Workbook.Save();
@@ -78,7 +78,7 @@ namespace ProgramInwentaryzacyjny
         {
             DateTime copydaytime = DateTime.Today;
             string a = copydaytime.ToString("d");
-            string txtQuery = "Select Nazwa_produktu, Sum(Wydanie) as Wydanie from Zuzycie left join Products on Products.Symbol = Zuzycie.Symbol where Wydanie < 0 and Data ='" + a + "' Group by Nazwa_produktu";
+            string txtQuery = "Select Zuzycie.Nazwa_produktu, Sum(Wydanie) as Wydanie from Zuzycie left join Products on Products.Symbol = Zuzycie.Symbol where Wydanie < 0 and Data ='" + a + "' Group by Zuzycie.Nazwa_produktu";
             ConnectToDatabase();
             sql_cmd = sql_con.CreateCommand();
             dataAdapter = new SQLiteDataAdapter(txtQuery, sql_con);

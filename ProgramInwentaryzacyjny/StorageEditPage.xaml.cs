@@ -108,7 +108,7 @@ namespace ProgramInwentaryzacyjny
                     if (Math.Abs(Convert.ToInt32(txt_iloscEdit.Text)) <= NotZero(table) && Convert.ToInt32(txt_iloscEdit.Text) < 0 && table == "aud7")
                     {
                         string txtQuery = @"Update StanAud7 set Ilość = (Select Ilość from StanAud7 where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
-                                            "Insert into Zuzycie (Symbol, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
+                                            "Insert into Zuzycie (Symbol, Nazwa_produktu, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
                         sql_cmd.CommandText = txtQuery;
@@ -121,7 +121,7 @@ namespace ProgramInwentaryzacyjny
                     else if (Math.Abs(Convert.ToInt32(txt_iloscEdit.Text)) <= NotZero(table) && Convert.ToInt32(txt_iloscEdit.Text) < 0 && table == "uro")
                     {
                         string txtQuery = @"Update StanUro set Ilość = (Select Ilość from StanUro where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
-                                            "Insert into Zuzycie (Symbol, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
+                                            "Insert into Zuzycie (Symbol, Nazwa_produktu, Wydanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
                         sql_cmd.CommandText = txtQuery;
@@ -134,7 +134,7 @@ namespace ProgramInwentaryzacyjny
                     else if(Convert.ToInt32(txt_iloscEdit.Text) > 0 && table == "aud7")
                     {
                         string txtQuery = @"Update StanAud7 set Ilość = (Select Ilość from StanAud7 where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
-                                            "Insert into Zuzycie (Symbol, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
+                                            "Insert into Zuzycie (Symbol, Nazwa_produktu, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
                         sql_cmd.CommandText = txtQuery;
@@ -147,7 +147,7 @@ namespace ProgramInwentaryzacyjny
                     else if (Convert.ToInt32(txt_iloscEdit.Text) > 0 && table == "uro")
                     {
                         string txtQuery = @"Update StanUro set Ilość = (Select Ilość from StanUro where Symbol ='" + txt_symbolEdit.Text + "') + '" + txt_iloscEdit.Text + "' where Symbol = '" + txt_symbolEdit.Text + "';" +
-                                            "Insert into Zuzycie (Symbol, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
+                                            "Insert into Zuzycie (Symbol, Nazwa_produktu, Dodanie, Data) values ('" + txt_symbolEdit.Text + "', '" + txt_nazwaEdit.Text + "', '" + txt_iloscEdit.Text + "', '" + localDate.ToString("d") + "');";
                         ConnectToDatabase();
                         sql_cmd = sql_con.CreateCommand();
                         sql_cmd.CommandText = txtQuery;

@@ -74,17 +74,28 @@ namespace ProgramInwentaryzacyjny
         }
         private void ExportStorage_Click(object sender, RoutedEventArgs e)
         {
+            List<ProductEx> products_list = new List<ProductEx>();
             string txtQuery = "Select Nazwa_produktu, Ilość from StanAud7 left join Products on Products.Symbol = StanAud7.Symbol";
             ConnectToDatabase();
             sql_cmd = new SQLiteCommand(txtQuery, sql_con);
             SQLiteDataReader dr = sql_cmd.ExecuteReader();
-            List<ProductEx> products_list = new List<ProductEx>();
             while (dr.Read())
             {
                 ProductEx product = new ProductEx(dr["Nazwa_produktu"].ToString(), Convert.ToInt32(dr["Ilość"]));
                 products_list.Add(product);
             }
             CloseConnection();
+            string txtQuery2 = "Select Nazwa_produktu, Ilość from StanUro left join Products on Products.Symbol = StanUro.Symbol";
+            ConnectToDatabase();
+            sql_cmd = new SQLiteCommand(txtQuery2, sql_con);
+            SQLiteDataReader dr2 = sql_cmd.ExecuteReader();
+            while (dr2.Read())
+            {
+                ProductEx product = new ProductEx(dr2["Nazwa_produktu"].ToString(), Convert.ToInt32(dr2["Ilość"]));
+                products_list.Add(product);
+            }
+            CloseConnection();
+
             using (SpreadsheetDocument document = SpreadsheetDocument.Create("Inwenta.xlsx", SpreadsheetDocumentType.Workbook))
             {
                 WorkbookPart workbookPart = document.AddWorkbookPart();
